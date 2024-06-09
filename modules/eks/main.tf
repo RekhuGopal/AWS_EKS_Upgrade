@@ -17,38 +17,6 @@ resource "aws_eks_cluster" "eks" {
 # Using Data Source to get all Avalablility Zones in Region
 data "aws_availability_zones" "available_zones" {}
 
-# Fetching Ubuntu 20.04 AMI ID
-data "aws_ami" "amazon_linux_2" {
-  most_recent = true
-
-  filter {
-    name   = "name"
-    values = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"]
-  }
-
-  filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
-  }
-
-  owners = ["099720109477"]
-}
-
-# Creating kubectl server
-resource "aws_instance" "kubectl-server" {
-  ami                         = data.aws_ami.amazon_linux_2.id
-  instance_type               = var.instance_size
-  associate_public_ip_address = true
-  subnet_id                   = var.public_subnet_az1_id
-  vpc_security_group_ids      = [var.eks_security_group_id]
-
-  tags = {
-    Name = "${var.cluster_name}-kubectl"
-    Env  = var.env
-    Type = var.type
-  }
-}
-
 # Creating Launch Template for Worker Nodes
 resource "aws_launch_template" "worker-node-launch-template" {
   name = "worker-node-launch-template"
