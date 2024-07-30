@@ -1,4 +1,4 @@
-$kubernetesVersion = "1.29"
+$kubernetesVersion = "1.30"
 $jsonOutput = eksctl utils describe-addon-versions --kubernetes-version $kubernetesVersion 
 $jsonOutput > result.json
 
