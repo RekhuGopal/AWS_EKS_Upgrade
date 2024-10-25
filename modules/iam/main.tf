@@ -22,6 +22,10 @@ resource "aws_iam_role_policy_attachment" "AmazonEKSClusterPolicy" {
   role       = aws_iam_role.master.name
 }
 
+resource "aws_iam_role_policy_attachment" "AmazonEKSClusterPolicyAdmin" {
+  policy_arn = "arn:aws:iam::aws:policy/AdministratorAccess"
+  role       = aws_iam_role.master.name
+}
 # Attaching Policy to IAM role
 resource "aws_iam_role_policy_attachment" "AmazonEKSServicePolicy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSServicePolicy"
@@ -81,6 +85,10 @@ resource "aws_iam_role_policy_attachment" "AmazonEKSWorkerNodePolicy" {
   role       = aws_iam_role.worker.name
 }
 
+resource "aws_iam_role_policy_attachment" "AmazonEKSWorkerNodeAdminP" {
+  policy_arn = "arn:aws:iam::aws:policy/AdministratorAccess"
+  role       = aws_iam_role.worker.name
+}
 # Attaching Policy to IAM role
 resource "aws_iam_role_policy_attachment" "AmazonEKS_CNI_Policy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
